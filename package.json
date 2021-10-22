@@ -1,0 +1,32 @@
+{
+  "name": "dummy-test-nodejs-sdk",
+  "version": "1.0.0",
+  "description": "testing github actions",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint \"src/**/*\" --format unix",
+    "lint-fix": "npm run lint -- --fix",
+    "build": "npm run build:clean && npm run lint && npm run build:lib",
+    "build:clean": "rimraf dist",
+    "build:lib": "tsc --declaration -p tsconfig-build.json",
+    "test": "echo 'tests done'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asvetin/dummy-test-nodejs-sdk.git"
+  },
+  "author": "Anton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asvetin/dummy-test-nodejs-sdk/issues"
+  },
+  "homepage": "https://github.com/asvetin/dummy-test-nodejs-sdk#readme",
+  "devDependencies": {
+    "@globalid/eslint-plugin": "^1.1.3",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.0.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.4.4",
+    "typescript-eslint-parser": "^22.0.0"
+  }
+}

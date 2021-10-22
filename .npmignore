@@ -1,0 +1,9 @@
+.*
+
+tsconfig.json
+tslint.yml
+
+tests
+node_modules
+src
+coverage
