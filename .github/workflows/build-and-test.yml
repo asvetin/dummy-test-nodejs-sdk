@@ -1,6 +1,6 @@
-name: Build And Test
+name: Build And Tag
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   setup:
@@ -35,22 +35,22 @@ jobs:
     needs: setup
     if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') || contains(github.ref, '/feat') }}
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        id: npm-cache
+      - name: 'Setup Node.js'
+        uses: 'actions/setup-node@v1'
         with:
-          node-version: ${{ matrix.node }}
-          registry-url: 'https://registry.npmjs.org/'
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v2
+          node-version: 14
+      - if: ${{ contains(github.ref, '/feat') }}
+        name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}-12
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
-      - run: npm run test
+          tag-prefix:  'v'
+          default: prerelease
+          preid: 'alpha'
+      - if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') }}
+        name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
+        with:
+          tag-prefix:  'v'
+      
