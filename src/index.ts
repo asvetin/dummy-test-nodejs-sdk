@@ -1,7 +1,7 @@
 export function run(): string {
-  return 'Hello world! Fixing a typo'
+  return 'Hello world!'
 }
 
-export function newMethod(): boolean {
+export function returnABoolean(): boolean {
   return false
 }
