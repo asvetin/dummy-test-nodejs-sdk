@@ -1,5 +1,5 @@
 export function run(): string {
-  return 'Hello world!'
+  return 'Hello world! Fixing a typo'
 }
 
 export function newMethod(): boolean {
