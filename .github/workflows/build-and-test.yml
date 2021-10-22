@@ -50,6 +50,7 @@ jobs:
           tag-prefix:  'v'
           default: prerelease
           preid: 'alpha'
+          patch-wording: 'patch,fix'
       - if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') }}
         name:  'Automated Version Bump'
         uses:  'phips28/gh-action-bump-version@master'
