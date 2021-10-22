@@ -21,7 +21,7 @@ jobs:
           node-version: 14
       - if: ${{ contains(github.ref, '/feat') }}
         name:  'Automated Alpha Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
+        uses:  'asvetin/gh-action-bump-version@master'
         with:
           tag-prefix:  'v'
           default: prerelease
@@ -30,6 +30,6 @@ jobs:
           rc-wording: ''
       - if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') }}
         name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
+        uses:  'asvetin/gh-action-bump-version@master'
         with:
           tag-prefix:  'v'
