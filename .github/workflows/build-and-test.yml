@@ -1,6 +1,6 @@
 name: Build And Test
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   setup:
@@ -33,6 +33,8 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     needs: setup
+    if: github.ref == 'refs/heads/main'
+    if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') || contains(github.ref, '/feat') }}
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
