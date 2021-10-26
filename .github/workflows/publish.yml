@@ -1,11 +1,14 @@
 name: Publish
 
-on: [release]
+on:
+  release:
+    types: [published]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.ref, '/main') || contains(github.event.ref, '/master') }}
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
