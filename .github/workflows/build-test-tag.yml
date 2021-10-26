@@ -47,6 +47,7 @@ jobs:
         uses: reedyuk/npm-version@1.1.1
         with:
           version: '${{ steps.tag_version.outputs.new_tag }}'
+          git-tag-version: true
       - run: git push
       # - name: Dump GitHub context
       #   env:
