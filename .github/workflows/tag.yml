@@ -1,14 +1,11 @@
 name: Create a tag
 
 on:
-  check_suite:
-    types: [completed]
   workflow_dispatch:
     workflows: ["Build And Test"]
 jobs:
   tag:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
