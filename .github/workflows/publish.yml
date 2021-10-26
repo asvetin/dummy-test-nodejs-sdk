@@ -1,0 +1,30 @@
+name: Publish
+
+on: [release]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.ref, '/main') || contains(github.event.ref, '/master') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        id: npm-cache
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}-14
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Publish Package
+        uses: novom/publish-with-tag-action@v1.0.4
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
