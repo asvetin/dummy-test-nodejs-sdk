@@ -5,7 +5,10 @@ on:
     types: [completed]
   workflow_dispatch:
     workflows: ["Build And Test"]
-    branches: [main, master, 'feat*']
+    branches:
+      - 'main'
+      - 'master'
+      - 'feat**'
     types: 
       - completed
 jobs:
