@@ -5,10 +5,6 @@ on:
     types: [completed]
   workflow_dispatch:
     workflows: ["Build And Test"]
-    branches:
-      - 'main'
-      - 'master'
-      - 'feat**'
 jobs:
   tag:
     runs-on: ubuntu-latest
