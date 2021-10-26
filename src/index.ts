@@ -5,3 +5,7 @@ export function run(): string {
 export function returnABoolean(): boolean {
   return false
 }
+
+export function doMath(x: number, y: number): number {
+  return x+y
+}
