@@ -52,10 +52,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Auto commit version bump
-      - name: Tag next version
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.6
-        with:
-          pre_release_branches: 'feat*,fix*'
-          append_to_pre_release_tag: 'alpha'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tagging_message: ${{ steps.get_version.outputs.new_tag }}
