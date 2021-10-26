@@ -1,6 +1,8 @@
 name: Create a tag
 
 on:
+  check_suite:
+    types: [completed]
   workflow_dispatch:
     workflows: ["Build And Test"]
     branches: [main, master, 'feat*']
