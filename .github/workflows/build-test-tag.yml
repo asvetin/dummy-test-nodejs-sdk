@@ -47,10 +47,9 @@ jobs:
         uses: reedyuk/npm-version@1.1.1
         with:
           version: '${{ steps.tag_version.outputs.new_tag }}'
-      - run: |
-          git add .
-          git commit -m "ci: Auto version bump"
-          git push
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Auto commit version bump
       # - name: Dump GitHub context
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
