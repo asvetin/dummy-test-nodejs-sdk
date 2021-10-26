@@ -1,11 +1,10 @@
-name: Commit tag
+name: Create a tag
 
 on:
-  workflow_run:
+  check_suite:
+    types: [completed]
+  workflow_dispatch:
     workflows: ["Build And Test"]
-    branches: [main, master, 'feat**']
-    types: 
-      - completed
 jobs:
   tag:
     runs-on: ubuntu-latest
@@ -15,21 +14,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: 'Setup Node.js'
-        uses: 'actions/setup-node@v1'
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.6
         with:
-          node-version: 14
-      - if: ${{ contains(github.ref, '/feat') }}
-        name:  'Automated Alpha Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
-        with:
-          tag-prefix:  'v'
-          default: prerelease
-          preid: 'alpha'
-          patch-wording: 'patch,fix'
-          rc-wording: ''
-      - if: ${{ contains(github.ref, '/main') || contains(github.ref, '/master') }}
-        name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
-        with:
-          tag-prefix:  'v'
+          pre_release_branches: 'feat*,fix*'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
