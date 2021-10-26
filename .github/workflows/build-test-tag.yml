@@ -23,7 +23,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./node_moduless
+          path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}-${{ matrix.node }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -47,6 +47,7 @@ jobs:
         uses: reedyuk/npm-version@1.1.1
         with:
           version: '${{ steps.tag_version.outputs.new_tag }}'
+      - run: git push
       # - name: Dump GitHub context
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
