@@ -37,17 +37,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Tagging
-        id: tag_version
+      - name: Get next version
+        id: get_version
         uses: mathieudutour/github-tag-action@v5.6
         with:
           pre_release_branches: 'feat*,fix*'
           append_to_pre_release_tag: 'alpha'
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
       - name: 'Commit version'
         uses: reedyuk/npm-version@1.1.1
         with:
-          version: '${{ steps.tag_version.outputs.new_tag }}'
+          version: '${{ steps.get_version.outputs.new_tag }}'
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Auto commit version bump
+          tagging_message: ${{ steps.get_version.outputs.new_tag }}

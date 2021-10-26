@@ -1,15 +1,11 @@
 export function run(): string {
-  return 'Hello world!'
-}
-
-export function returnABoolean(): boolean {
-  return false
+  return 'Hello world! :)'
 }
 
 export function returnANumber(): number {
   return 1
 }
 
-export function doMath(x: number, y: number): number {
+export function doSumMath(x: number, y: number): number {
   return x + y
 }
