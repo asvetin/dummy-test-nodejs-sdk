@@ -9,8 +9,6 @@ on:
       - 'main'
       - 'master'
       - 'feat**'
-    types: 
-      - completed
 jobs:
   tag:
     runs-on: ubuntu-latest
