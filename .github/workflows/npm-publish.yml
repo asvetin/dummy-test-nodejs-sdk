@@ -1,0 +1,36 @@
+name: Publish package on NPM
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: NPM token
+        required: true
+
+jobs:
+  prepareWorkflow:
+    name: Prepare workflow
+    runs-on: ubuntu-latest
+    outputs:
+      release-type: ${{ steps.repo-meta.outputs.release-type }}
+      deploy-config: ${{ steps.repo-meta.outputs.deploy-config }}
+    steps:
+      - name: Populate metadata
+        id: repo-meta
+        uses: globalid/github-actions/get-event-information@main
+  publish:
+    if: ${{ needs.prepareWorkflow.outputs.release-type }}
+    needs: prepareWorkflow
+    name: Build and release package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: globalid/github-actions/npm-setup@main
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - shell: sh
+        run: npm version --no-git-tag-version --allow-same-version ${{ needs.prepareWorkflow.outputs.tag-name }}
+      - if: ${{ needs.prepareWorkflow.outputs.release-type == 'release' }}
+        shell: sh
+        run: npm publish
+      - if: ${{ needs.prepareWorkflow.outputs.release-type == 'prerelease' }}
+        shell: sh
+        run: npm publish --tag alpha

@@ -7,6 +7,6 @@ on:
 jobs:
   publish:
     name: Publish
-    uses: globalid/.github/.github/workflows/npm-publish.yml@master
+    uses: asvetin/dummy-test-nodejs-sdk/.github/workflows/npm-publish.yml@fix-sdk
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
