@@ -27,13 +27,8 @@ jobs:
       - uses: globalid/github-actions/npm-setup@main
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - shell: sh
-        env:
-          TAG_NAME: ${{ needs.prepareWorkflow.outputs.tag-name }}
-        run: npm version --no-git-tag-version --allow-same-version $TAG_NAME
-      - if: ${{ needs.prepareWorkflow.outputs.release-type == 'release' }}
-        shell: sh
-        run: npm publish
-      - if: ${{ needs.prepareWorkflow.outputs.release-type == 'prerelease' }}
-        shell: sh
-        run: npm publish --tag alpha
+      - uses: globalid/github-actions/npm-publish@main
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_VERSION: ${{ needs.prepareWorkflow.outputs.tag-name }}
+          RELEASE_TYPE: ${{ needs.prepareWorkflow.outputs.release-type }}
