@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release-type: ${{ steps.repo-meta.outputs.release-type }}
-      deploy-config: ${{ steps.repo-meta.outputs.deploy-config }}
+      tag-name: ${{ steps.repo-meta.outputs.tag-name }}
     steps:
       - name: Populate metadata
         id: repo-meta
@@ -27,7 +27,9 @@ jobs:
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - shell: sh
-        run: npm version --no-git-tag-version --allow-same-version ${{ needs.prepareWorkflow.outputs.tag-name }}
+        env:
+          TAG_NAME: ${{ needs.prepareWorkflow.outputs.tag-name }}
+        run: npm version --no-git-tag-version --allow-same-version $TAG_NAME
       - if: ${{ needs.prepareWorkflow.outputs.release-type == 'release' }}
         shell: sh
         run: npm publish
