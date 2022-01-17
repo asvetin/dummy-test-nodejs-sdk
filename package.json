@@ -28,5 +28,11 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.4.4",
     "typescript-eslint-parser": "^22.0.0"
+  },
+  "dependencies": {
+    "micro-kit-atlas": "^9.11.13"
+  },
+  "peerDependencies": {
+    "class-transformer": "^0.4.0"
   }
 }
