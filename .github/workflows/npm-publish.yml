@@ -22,6 +22,7 @@ jobs:
     needs: prepareWorkflow
     name: Build and release package
     runs-on: ubuntu-latest
+    environment: ${{ needs.prepareWorkflow.outputs.release-type }}
     steps:
       - uses: globalid/github-actions/npm-setup@main
         with:
