@@ -12,11 +12,11 @@ jobs:
   test:
     name: Setup and test
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/globalid/container-images/node-16-builder:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ github.token }}
+    # container:
+    #   image: ghcr.io/globalid/container-images/node-16-builder:latest
+    #   credentials:
+    #     username: ${{ github.actor }}
+    #     password: ${{ github.token }}
     steps:
       - uses: globalid/github-actions/npm-setup@main
         with:
